@@ -12,12 +12,14 @@ print ("Tamanho da Estrutura: {}".format(registroCEP.size))
 with open("cep.dat","rb") as f:
 	line = f.read(registroCEP.size)
 	counter = 0
+	found = 0
 	while len(line) > 0:
 		record = registroCEP.unpack(line)
 		if sys.argv[1] in record[addressColumn].decode('latin1'):
 			data = [record[i].decode('latin1').strip() for i in range(len(record))]
 			print("{:<32.32} {:<24.24} {:<24.24} {:<20.20} {:<4} {}".format(*data))
+			found += 1
 		line = f.read(registroCEP.size)
 		counter += 1
-	print ("Total de Registros Lidos: {}".format(counter))
-
+	print("Total de registros lidos: {}".format(counter))
+	print("Total de registros correspondentes: {}".format(found))
