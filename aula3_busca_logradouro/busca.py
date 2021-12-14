@@ -8,11 +8,12 @@ if len(sys.argv) != 2:
 
 registroCEP = struct.Struct("72s72s72s72s2s8s2s")
 addressColumn = 0
-print ("Tamanho da Estrutura: {}".format(registroCEP.size))
+
+counter = 0
+found = 0
+
 with open("cep.dat","rb") as f:
 	line = f.read(registroCEP.size)
-	counter = 0
-	found = 0
 	while len(line) > 0:
 		record = registroCEP.unpack(line)
 		if sys.argv[1] in record[addressColumn].decode('latin1'):
@@ -21,5 +22,7 @@ with open("cep.dat","rb") as f:
 			found += 1
 		line = f.read(registroCEP.size)
 		counter += 1
-	print("Total de registros lidos: {}".format(counter))
-	print("Total de registros correspondentes: {}".format(found))
+
+print('=' * 120)
+print(f"Total de registros lidos: {counter}")
+print(f"Total de registros correspondentes: {found}")
