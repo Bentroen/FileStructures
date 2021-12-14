@@ -15,8 +15,10 @@ with open("cep.dat","rb") as f:
 	while len(line) > 0:
 		record = registroCEP.unpack(line)
 		if sys.argv[1] in record[addressColumn].decode('latin1'):
-			for i in range(0,len(record)-1):
-				print (record[i].decode('latin1'))
+			data = []
+			for i in range(0, len(record)):
+				data.append(record[i].decode('latin1').strip())
+			print("{:<32.32} {:<24.24} {:<24.24} {:<20.20} {:<4} {}".format(*data))
 		line = f.read(registroCEP.size)
 		counter += 1
 	print ("Total de Registros Lidos: {}".format(counter))
